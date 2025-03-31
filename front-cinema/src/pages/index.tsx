@@ -1,23 +1,40 @@
 import SearchableLayout from "@/components/searchable-layout";
 import { ReactNode } from "react";
-import Movies from "@/dommy.json";
 import MovieItem from "@/components/movie-item";
+import fetchMoives from "./lib/fetch-movies";
+import { InferGetServerSidePropsType } from "next";
+import fetchRandomMoives from "./lib/fetch-random-movies";
 
-export default function Home() {
-  const randomMovies = [...Movies].sort(() => 0.5 - Math.random()).slice(0, 3);
+export const getServerSideProps = async () => {
+  const [allMovies, recoMovies] = await Promise.all([
+    fetchMoives(),
+    fetchRandomMoives()
+  ]);
 
+  return {
+    props: {
+      allMovies,
+      recoMovies
+    }
+  };
+}
+
+export default function Home({
+  allMovies,
+  recoMovies
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <section>
         <h3>지금 가장 추천하는 영화</h3>
         <div className="recommended-movies">
-          {randomMovies.map((movie) => <MovieItem key={movie.id} {...movie} />)}
+          {recoMovies.map((movie) => <MovieItem key={movie.id} {...movie} />)}
         </div>
       </section>
       <section>
         <h3>등록된 모든 영화</h3>
         <div className="all-movies">
-          {Movies.map((movie) => <MovieItem key={movie.id} {...movie} />)}
+          {allMovies.map((movie) => <MovieItem key={movie.id} {...movie} />)}
         </div>
       </section>
     </>
