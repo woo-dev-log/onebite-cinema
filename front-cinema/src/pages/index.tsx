@@ -2,10 +2,10 @@ import SearchableLayout from "@/components/searchable-layout";
 import { ReactNode } from "react";
 import MovieItem from "@/components/movie-item";
 import fetchMoives from "./lib/fetch-movies";
-import { InferGetServerSidePropsType } from "next";
+import { InferGetStaticPropsType } from "next";
 import fetchRandomMoives from "./lib/fetch-random-movies";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const [allMovies, recoMovies] = await Promise.all([
     fetchMoives(),
     fetchRandomMoives()
@@ -22,7 +22,7 @@ export const getServerSideProps = async () => {
 export default function Home({
   allMovies,
   recoMovies
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <section>
