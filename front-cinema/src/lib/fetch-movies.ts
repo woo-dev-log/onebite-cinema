@@ -1,6 +1,8 @@
 import { MovieData } from "@/types";
 
-export default async function fetchMoives(q?: string): Promise<MovieData[]> {
+export default async function fetchMoives(
+  q?: string
+): Promise<MovieData[]> {
   let url = `http://localhost:12345/movie`;
 
   if (q) {

@@ -1,6 +1,6 @@
-import { GetServerSidePropsContext, InferGetStaticPropsType } from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import style from "./[id].module.css";
-import fetchOneMovie from "../lib/fetch-one-movie";
+import fetchOneMovie from "@/lib/fetch-one-movie";
 import { useRouter } from "next/router";
 
 export const getStaticPaths = () => {
@@ -14,10 +14,12 @@ export const getStaticPaths = () => {
   }
 }
 
-export async function getStaticProps(context: GetServerSidePropsContext) {
+export async function getStaticProps(
+  context: GetStaticPropsContext
+) {
   const id = context.params!.id;
   const movieData = await fetchOneMovie(Number(id));
-  
+
   if (!movieData) {
     return {
       notFound: true

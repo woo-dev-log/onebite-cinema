@@ -1,7 +1,7 @@
 import SearchableLayout from "@/components/searchable-layout";
 import { ReactNode, useEffect, useState } from "react";
 import MovieItem from "@/components/movie-item";
-import fetchMovies from "../lib/fetch-movies";
+import fetchMovies from "@/lib/fetch-movies";
 import { MovieData } from "@/types";
 import { useRouter } from "next/router";
 
