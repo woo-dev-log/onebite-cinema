@@ -3,14 +3,14 @@ import { MovieData } from "@/types";
 export default async function fetchMoives(
   q?: string
 ): Promise<MovieData[]> {
-  let url = `https://onebite-cinema-api-main-nu.vercel.app/movie`;
+  let url = `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie`;
 
   if (q) {
     url += `/search?q=${q}`;
   }
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: 24 * 60 * 60 } });
 
     if (!response.ok) {
       throw new Error();

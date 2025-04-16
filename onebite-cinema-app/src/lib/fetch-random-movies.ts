@@ -1,10 +1,10 @@
 import { MovieData } from "@/types";
 
 export default async function fetchRandomMoives(): Promise<MovieData[]> {
-  const url = `https://onebite-cinema-api-main-nu.vercel.app/movie/random`;
+  const url = `${process.env.NEXT_PUBLIC_API_SERVER_URL}/movie/random`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: 10 } });
 
     if (!response.ok) {
       throw new Error();
